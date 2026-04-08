@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ギターの数字あそび</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <h1>ギターの数字あそび</h1>
+        <p>コード・数字・キーのつながりを、あそびながら覚えよう</p>
+      </header>
+
+      <section id="home-screen" class="screen active" aria-labelledby="home-title">
+        <h2 id="home-title">キーをえらぼう</h2>
+        <p class="lead">曲のおうち（キー）をえらぶと、1 / 4 / 5 / 6m のなかまが見えるよ。</p>
+        <div id="key-buttons" class="grid key-grid"></div>
+      </section>
+
+      <section id="key-screen" class="screen" aria-labelledby="key-title">
+        <div class="screen-top">
+          <button id="back-home" class="secondary">← キーえらびにもどる</button>
+          <h2 id="key-title"></h2>
+        </div>
+        <p id="key-subtitle" class="lead"></p>
+        <div id="degree-cards" class="grid"></div>
+      </section>
+
+      <section id="chord-screen" class="screen" aria-labelledby="chord-title">
+        <div class="screen-top">
+          <button id="back-key" class="secondary">← キーのカードにもどる</button>
+          <h2 id="chord-title"></h2>
+        </div>
+
+        <div class="chord-layout">
+          <article class="card">
+            <h3>このコードの役わり</h3>
+            <p id="chord-role"></p>
+            <p id="chord-key-context" class="muted"></p>
+          </article>
+
+          <article class="card">
+            <h3>コードフォーム（オープンコード）</h3>
+            <figure class="diagram">
+              <img id="chord-form" alt="コードフォーム図" />
+            </figure>
+            <p id="chord-fingering"></p>
+            <p id="chord-tip" class="muted"></p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

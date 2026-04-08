@@ -1,0 +1,181 @@
+:root {
+  --bg: #f6f3e8;
+  --card: #fffdf7;
+  --ink: #1f2530;
+  --muted: #5c6370;
+  --primary: #007f5f;
+  --primary-dark: #015741;
+  --secondary: #f1e7c8;
+  --border: #d8ccab;
+  --shadow: 0 8px 20px rgba(31, 37, 48, 0.12);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+  background: radial-gradient(circle at top right, #fff8dd, var(--bg) 55%);
+  color: var(--ink);
+}
+
+.app-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.app-header {
+  background: linear-gradient(120deg, #ffd166, #fcbf49);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.app-header p {
+  margin: 10px 0 0;
+  color: #4b4330;
+}
+
+.screen {
+  display: none;
+  margin-top: 22px;
+}
+
+.screen.active {
+  display: block;
+}
+
+.lead {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.key-grid {
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background: var(--primary);
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  background: var(--primary-dark);
+}
+
+button.secondary {
+  background: var(--secondary);
+  color: #453e2c;
+  font-weight: 600;
+}
+
+.screen-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#degree-cards {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.degree-button {
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+}
+
+.degree-button:hover {
+  background: #fff4cf;
+}
+
+.degree-content {
+  display: block;
+  padding: 14px;
+}
+
+.degree-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.degree-chord {
+  margin-top: 4px;
+  font-size: 1.3rem;
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+.degree-desc {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.chord-layout {
+  display: grid;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.diagram {
+  margin: 8px 0 12px;
+  padding: 10px;
+  background: #f8f2dc;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: auto;
+}
+
+.diagram img {
+  display: block;
+  width: min(100%, 280px);
+  margin: 0 auto;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+@media (min-width: 740px) {
+  .chord-layout {
+    grid-template-columns: 1fr 1.1fr;
+  }
+}
