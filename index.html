@@ -3,53 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ギターの数字あそび</title>
+    <title>ギターの数字あそび | 五度圏で学ぶダイアトニックコード</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="app-shell">
-      <header class="app-header">
+      <header class="hero">
+        <p class="eyebrow">Guitar Theory for Kids</p>
         <h1>ギターの数字あそび</h1>
-        <p>コード・数字・キーのつながりを、あそびながら覚えよう</p>
+        <p class="hero-copy">五度圏からキーをえらぶと、そのキーの「なかまコード」と役割がわかるアプリ</p>
       </header>
 
-      <section id="home-screen" class="screen active" aria-labelledby="home-title">
-        <h2 id="home-title">キーをえらぼう</h2>
-        <p class="lead">曲のおうち（キー）をえらぶと、1 / 4 / 5 / 6m のなかまが見えるよ。</p>
-        <div id="key-buttons" class="grid key-grid"></div>
+      <section class="panel" aria-labelledby="home-title">
+        <div class="panel-header">
+          <h2 id="home-title">1. 五度圏からキーをえらぼう</h2>
+          <p>キーをタップすると、そのキーのなかまコードが表示されます。</p>
+        </div>
+
+        <div class="circle-wrap" role="group" aria-label="五度圏キー選択">
+          <div class="circle-note center-note" id="selected-key-chip" aria-live="polite">C</div>
+          <div id="circle-notes-layer"></div>
+        </div>
+
+        <p id="parallel-minor" class="parallel-minor" aria-live="polite"></p>
       </section>
 
-      <section id="key-screen" class="screen" aria-labelledby="key-title">
-        <div class="screen-top">
-          <button id="back-home" class="secondary">← キーえらびにもどる</button>
-          <h2 id="key-title"></h2>
-        </div>
-        <p id="key-subtitle" class="lead"></p>
-        <div id="degree-cards" class="grid"></div>
-      </section>
-
-      <section id="chord-screen" class="screen" aria-labelledby="chord-title">
-        <div class="screen-top">
-          <button id="back-key" class="secondary">← キーのカードにもどる</button>
-          <h2 id="chord-title"></h2>
+      <section class="panel" aria-labelledby="key-detail-title">
+        <div class="panel-header">
+          <h2 id="key-detail-title">2. キーのなかまコード</h2>
+          <p id="key-description">キーを選ぶと、ここにダイアトニックコードが表示されます。</p>
         </div>
 
-        <div class="chord-layout">
-          <article class="card">
-            <h3>このコードの役わり</h3>
-            <p id="chord-role"></p>
-            <p id="chord-key-context" class="muted"></p>
-          </article>
-
-          <article class="card">
-            <h3>コードフォーム（オープンコード）</h3>
-            <figure class="diagram">
-              <img id="chord-form" alt="コードフォーム図" />
-            </figure>
-            <p id="chord-fingering"></p>
-            <p id="chord-tip" class="muted"></p>
-          </article>
-        </div>
+        <div id="diatonic-grid" class="diatonic-grid"></div>
       </section>
     </main>
 
