@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コード進行を理解して、ギターを楽しもう！</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px 0;
+            place-items: center;
+        }
+
+        .slide-container {
+            align-items: center;
+            background-color: #fffdf5;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            height: 720px;
+            justify-content: flex-start;
+            overflow: hidden;
+            padding: 40px 50px;
+            position: relative;
+            width: 1280px;
+            color: #4a4a4a;
+        }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(#ffe0b2 20%, transparent 20%), radial-gradient(#ffe0b2 20%, transparent 20%);
+            background-color: transparent;
+            background-position: 0 0, 25px 25px;
+            background-size: 50px 50px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-container h1,
+        .slide-container h2,
+        .slide-container h3 {
+            color: #ff7b54;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .slide-title {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-align: left;
+            width: 100%;
+            border-bottom: 6px dashed #ffb26b;
+            padding-bottom: 10px;
+        }
+
+        .slide-container p {
+            font-size: 26px;
+            line-height: 1.6;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* ----- 画像差し替え用の魔法の枠 ----- */
+        .empty-image-box {
+            background-color: #f0f0f0;
+            border: 6px dashed #bdc3c7;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #7f8c8d;
+            font-size: 24px;
+            font-weight: 800;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+            overflow: hidden; /* はみ出した画像を自動で隠して角丸にする */
+        }
+
+        .empty-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* 初期状態では画像を見えなくする */
+        }
+        
+        /* has-image クラスがついた時の設定 */
+        .empty-image-box.has-image {
+            border: none;
+            padding: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .empty-image-box.has-image .placeholder-text {
+            display: none; /* 文字を消す */
+        }
+
+        .empty-image-box.has-image img {
+            display: block; /* 画像を表示する */
+        }
+        /* ---------------------------------- */
+
+        .pop-box {
+            background: white;
+            border: 5px solid #4a4a4a;
+            border-radius: 24px;
+            box-shadow: 8px 8px 0px #ffb26b;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: #fff;
+            border: 5px solid #4a4a4a;
+            border-radius: 30px;
+            padding: 15px 25px;
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            color: #4a4a4a;
+            box-shadow: 6px 6px 0px #ffd56b;
+            margin-bottom: 25px;
+            z-index: 2;
+        }
+        
+        .speech-bubble.bottom-pointer::before,
+        .speech-bubble.bottom-pointer::after {
+            content: '';
+            position: absolute;
+            border: solid transparent;
+            border-top-color: #4a4a4a;
+            bottom: -35px;
+            left: 50px;
+            border-width: 20px;
+        }
+        
+        .speech-bubble.bottom-pointer::after {
+            border-top-color: #fff;
+            bottom: -24px;
+            left: 53px;
+            border-width: 16px;
+        }
+
+        .big-arrow {
+            font-size: 80px;
+            color: #ff7b54;
+            margin: 0 20px;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 30px;
+        }
+        
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="slide-container" id="slide1" style="justify-content: center;">
+    <div class="pop-box" style="padding: 40px 60px; transform: rotate(-2deg);">
+        <p style="font-size: 32px; color: #93bf85; margin-bottom: 15px; font-weight: 800;">145</p>
+        <h1 style="font-size: 56px; line-height: 1.4;">
+            〜コード進行を理解して、<br>
+            ギターを楽しもう！〜
+        </h1>
+    </div>
+</div>
+
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">今回の顧客（ターゲット）</h2>
+    <div class="content-area">
+        <div class="flex-row">
+            <div class="flex-col" style="width: 40%;">
+                <div class="speech-bubble bottom-pointer">
+                    もっと上手に<br>なりたい！
+                </div>
+                <div class="empty-image-box" style="width: 280px; height: 320px;">
+                    <div class="placeholder-text">画像枠<br><span style="font-size:18px; color:#999;">（悩んでいる<br>男の子のイラスト）</span></div>
+                    </div>
+            </div>
+            
+            <div class="pop-box" style="width: 55%; padding: 40px;">
+                <p style="font-size: 34px;">
+                    ギターをやってみて、<br>
+                    <strong>もっとうまくなりたい</strong><br>
+                    と思っている小学生
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">お困りごとは...？</h2>
+    <div class="content-area">
+        <div class="pop-box" style="margin-bottom: 20px; padding: 15px 30px; width: 100%; box-shadow: 6px 6px 0px #93bf85; border-color: #93bf85;">
+            <p style="font-size: 30px; color: #4a4a4a; font-weight: 800;">
+                最初は大丈夫でも、コードがだんだん雑になる...
+            </p>
+        </div>
+
+        <div class="flex-row" style="align-items: stretch; height: 300px;">
+            <div class="flex-col" style="width: 40%; justify-content: space-between;">
+                <div class="empty-image-box" style="height: 180px; border-color:#93bf85; color:#93bf85;">
+                    <div class="placeholder-text">画像枠<br><span style="font-size:18px;">（きれいな<br>Cコードの表）</span></div>
+                    </div>
+                <p style="font-size: 22px; text-align: center; margin-top: 15px; font-weight: 800;">
+                    「最初は、3本で<br>しっかり押さえるぞ！」
+                </p>
+            </div>
+
+            <div class="flex-col" style="justify-content: center;">
+                <i class="fa-solid fa-arrow-right big-arrow"></i>
+            </div>
+
+            <div class="flex-col" style="width: 40%; justify-content: space-between;">
+                <div class="empty-image-box" style="height: 180px; border-color:#ff7b54; color:#ff7b54;">
+                    <div class="placeholder-text">画像枠<br><span style="font-size:18px;">（だんだん崩れる<br>コードの表）</span></div>
+                     </div>
+                <p style="font-size: 22px; text-align: center; margin-top: 15px; font-weight: 800; color: #ff7b54;">
+                    「しかし、うわ、<br>間に合わなかった...」
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">そして...</h2>
+    <div class="content-area">
+        <div class="flex-row" style="align-items: flex-start;">
+            
+            <div class="flex-col" style="width: 45%;">
+                <div class="speech-bubble bottom-pointer" style="font-size: 26px; padding: 10px 20px;">
+                    ヤバい！<br>間違えた！
+                </div>
+                <div class="empty-image-box" style="width: 240px; height: 240px; margin-bottom: 20px;">
+                    <div class="placeholder-text">画像枠<br><span style="font-size:18px;">（焦っている<br>男の子のイラスト）</span></div>
+                     </div>
+                <p style="font-size: 24px; text-align: center; font-weight: 800;">
+                    焦ってしまい、<br>たくさんのミスを...
+                </p>
+            </div>
+
+            <div style="display: flex; height: 100%; padding-top: 120px;">
+                <i class="fa-solid fa-arrow-right big-arrow" style="color: #4a4a4a;"></i>
+            </div>
+
+            <div class="flex-col" style="width: 40%; padding-top: 60px;">
+                <p style="font-size: 28px; font-weight: 800; line-height: 1.8;">
+                    練習しよう...。<br>
+                    ↓<br>
+                    しかし、教本で<br>
+                    練習するも<br>
+                    覚えられず...。
+                </p>
+                <i class="fa-solid fa-face-sad-tear" style="font-size: 70px; color: #95a5a6; margin-top: 20px;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">問題（もんだい）</h2>
+    <div class="content-area">
+        <div class="pop-box" style="margin-bottom: 40px; padding: 30px 60px; box-shadow: 8px 8px 0px #ff7b54; border-color: #ff7b54;">
+            <h3 style="font-size: 44px;">1曲に時間がかかる💦</h3>
+        </div>
+        <ul style="font-size: 32px; line-height: 2.2; color: #4a4a4a; font-weight: 800; list-style-type: none; padding: 0;">
+            <li><i class="fa-solid fa-clock" style="color: #ffb26b; margin-right: 15px; font-size: 36px;"></i> 習得に時間がかかる</li>
+            <li><i class="fa-solid fa-arrow-trend-down" style="color: #93bf85; margin-right: 15px; font-size: 36px;"></i> 練習効率が低い</li>
+        </ul>
+    </div>
+</div>
+
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">どうしてそうなるの？（原因）</h2>
+    <div class="content-area">
+        <div class="pop-box" style="margin-bottom: 30px; padding: 25px 50px;">
+            <h3 style="font-size: 40px; color: #4a4a4a;">
+                <span style="color:#ff7b54;">毎回ゼロから</span><br>覚えているから！
+            </h3>
+        </div>
+        <div class="flex-row" style="margin-bottom: 20px;">
+            <div class="pop-box" style="padding: 15px 30px; border-color: #93bf85; box-shadow: 6px 6px 0px #93bf85;">
+                <p style="font-size: 26px;">パターン理解なし🙅‍♂️</p>
+            </div>
+            <div class="pop-box" style="padding: 15px 30px; border-color: #93bf85; box-shadow: 6px 6px 0px #93bf85;">
+                <p style="font-size: 26px;">暗記ベース😭</p>
+            </div>
+        </div>
+        <p style="font-size: 24px; font-weight: 800; color: #7f8c8d; text-align: center;">
+            「同じようなコードでも、<br>毎回新しく覚えてしまっているんだ...」
+        </p>
+    </div>
+</div>
+
+<div class="slide-container" id="slide7" style="justify-content: center;">
+    <h2 class="slide-title">はっ！💡（気づき）</h2>
+    <div class="content-area">
+        <i class="fa-solid fa-lightbulb" style="font-size: 100px; color: #ffd56b; margin-bottom: 30px;"></i>
+        <div class="pop-box" style="padding: 40px 60px; border-color: #ffd56b; box-shadow: 10px 10px 0px #ffd56b; transform: rotate(1deg);">
+            <h3 style="font-size: 48px; color: #4a4a4a;">
+                コードには<br>
+                <span style="color:#ff7b54;">共通パターン</span>がある！
+            </h3>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">どうすればいい？（解決策）</h2>
+    <div class="content-area">
+        <div class="flex-row" style="margin-bottom: 30px; width: 90%;">
+            <div class="pop-box" style="width: 45%;">
+                <i class="fa-solid fa-cubes" style="font-size: 45px; color:#93bf85; margin-bottom: 15px;"></i>
+                <p style="font-size: 28px; font-weight: 800;">構造（しくみ）を<br>理解する</p>
+            </div>
+            <div class="pop-box" style="width: 45%;">
+                <i class="fa-solid fa-music" style="font-size: 45px; color:#93bf85; margin-bottom: 15px;"></i>
+                <p style="font-size: 28px; font-weight: 800;">音の関係を<br>知る</p>
+            </div>
+        </div>
+        <i class="fa-solid fa-caret-down" style="font-size: 45px; color: #4a4a4a; margin-bottom: 20px;"></i>
+        <div class="pop-box" style="background-color: #ff7b54; border-color: #4a4a4a; padding: 20px 60px; box-shadow: 8px 8px 0px #4a4a4a;">
+            <h3 style="font-size: 42px; color: white; margin: 0;">「暗記」から「理解」へ！</h3>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">デモ① コード理解アプリ</h2>
+    <div class="content-area">
+        <div class="flex-row" style="align-items: stretch;">
+            <div style="width: 45%;">
+                <div class="empty-image-box" style="height: 350px;">
+                    <div class="placeholder-text">画像枠<br><span style="font-size:18px;">（アプリの画面）</span></div>
+                     </div>
+            </div>
+            <div class="flex-col" style="width: 50%; justify-content: center; align-items: flex-start;">
+                <div class="pop-box" style="margin-bottom: 20px; text-align: left; width: 100%; border-color: #bdc3c7; box-shadow: 4px 4px 0px #bdc3c7; padding: 20px;">
+                    <p style="font-size: 20px; color: #7f8c8d; margin-bottom: 5px; font-weight: 800;">URL:</p>
+                    <p style="font-size: 20px; font-family: monospace; color: #2b3a8f; word-break: break-all; margin: 0;">https://kohtaronishimura.github.io/PBL/</p>
+                </div>
+                <div class="pop-box" style="width: 100%; border-color: #ffb26b; box-shadow: 6px 6px 0px #ffb26b; padding: 20px;">
+                    <p style="font-size: 26px; font-weight: 800; color: #4a4a4a;">
+                        構造を可視化して、<br>初心者でも理解しやすい！
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide10" style="justify-content: center;">
+    <div class="content-area">
+        <h2 style="font-size: 56px; margin-bottom: 30px; color: #ff7b54;">しかし...！</h2>
+        <div class="pop-box" style="margin-bottom: 30px; padding: 30px 50px; box-shadow: 8px 8px 0px #4a4a4a;">
+            <p style="font-size: 34px; font-weight: 800; line-height: 1.5; color: #4a4a4a;">
+                コードの押さえ方が曖昧だと、<br>応用で止まってしまう💦
+            </p>
+        </div>
+        <div class="empty-image-box" style="width: 220px; height: 220px; border-radius: 50%;">
+            <div class="placeholder-text">画像枠<br><span style="font-size:18px;">（困っているイラスト）</span></div>
+            </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide11">
+    <h2 class="slide-title">デモ② 学習支援アプリ</h2>
+    <div class="content-area">
+        <div class="flex-row" style="align-items: stretch;">
+            <div style="width: 45%;">
+                <div class="empty-image-box" style="height: 350px;">
+                    <div class="placeholder-text">画像枠<br><span style="font-size:18px;">（アプリの画面）</span></div>
+                     </div>
+            </div>
+            <div class="flex-col" style="width: 50%; justify-content: center; align-items: flex-start;">
+                <div class="pop-box" style="margin-bottom: 20px; text-align: left; width: 100%; border-color: #bdc3c7; box-shadow: 4px 4px 0px #bdc3c7; padding: 20px;">
+                    <p style="font-size: 20px; color: #7f8c8d; margin-bottom: 5px; font-weight: 800;">URL:</p>
+                    <p style="font-size: 20px; font-family: monospace; color: #2b3a8f; word-break: break-all; margin: 0;">https://pbl-2026.onrender.com</p>
+                </div>
+                <div class="pop-box" style="width: 100%; border-color: #ffb26b; box-shadow: 6px 6px 0px #ffb26b; padding: 20px;">
+                    <p style="font-size: 26px; font-weight: 800; color: #4a4a4a;">
+                        学習手順を整理し、<br>実際の練習につなげる！
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide12">
+    <h2 class="slide-title">どんなふうに変わる？</h2>
+    <div class="content-area">
+        <div class="flex-row" style="margin-bottom: 40px; width: 90%; align-items: stretch;">
+            <div class="pop-box" style="width: 45%; border-color:#93bf85; box-shadow: 6px 6px 0px #93bf85; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fa-solid fa-rocket" style="font-size: 50px; color:#93bf85; margin-bottom: 15px;"></i>
+                <p style="font-size: 28px; font-weight: 800;">習得スピードが<br>上がる！</p>
+            </div>
+            <div class="pop-box" style="width: 45%; border-color:#93bf85; box-shadow: 6px 6px 0px #93bf85; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fa-solid fa-check-double" style="font-size: 50px; color:#93bf85; margin-bottom: 15px;"></i>
+                <p style="font-size: 28px; font-weight: 800;">演奏のミスが<br>減る！</p>
+            </div>
+        </div>
+        <div class="pop-box" style="background-color: #ffd56b; border-color: #4a4a4a; padding: 20px 80px; box-shadow: 8px 8px 0px #4a4a4a; transform: rotate(-2deg); width: 80%;">
+            <h3 style="font-size: 46px; color: #4a4a4a; margin: 0;">自信がつく✨</h3>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide13">
+    <h2 class="slide-title">まとめ</h2>
+    <div class="content-area">
+        <div class="pop-box" style="width: 90%; text-align: left; padding: 30px 50px; margin-bottom: 30px; background-color: #fffdf5;">
+            <p style="font-size: 32px; margin-bottom: 15px; font-weight: 800;">
+                <span style="color:#ff7b54;">問題：</span>効率が悪い💦
+            </p>
+            <p style="font-size: 32px; margin-bottom: 15px; font-weight: 800;">
+                <span style="color:#ff7b54;">原因：</span>理解不足🤔
+            </p>
+            <p style="font-size: 32px; font-weight: 800;">
+                <span style="color:#ff7b54;">解決：</span>コード理論💡
+            </p>
+        </div>
+        <div class="pop-box" style="border-color: #ff7b54; padding: 20px 50px; box-shadow: 8px 8px 0px #ff7b54;">
+            <p style="font-size: 38px; color: #ff7b54; font-weight: 800; margin: 0;">
+                「理解」が成長を加速する！🎸
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+```
