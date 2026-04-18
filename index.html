@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PBL 公開ページ</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #1f2937;
+        --accent: #ff7b54;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        background: linear-gradient(135deg, #e7eefc 0%, var(--bg) 50%, #fef7ef 100%);
+        color: var(--text);
+        padding: 24px;
+      }
+      .wrap {
+        width: min(720px, 100%);
+        background: var(--card);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+      }
+      h1 { margin: 0 0 10px; font-size: 28px; }
+      p { margin: 0 0 20px; line-height: 1.7; }
+      .links { display: grid; gap: 12px; }
+      a {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        background: var(--accent);
+        padding: 14px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+      }
+      a:nth-child(2) { background: #2f6feb; }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>PBL 公開ページ</h1>
+      <p>GitHub Pages から、アプリとスライドをそれぞれ開けます。</p>
+      <div class="links">
+        <a href="./app/">アプリを開く</a>
+        <a href="./slides/">スライドを開く</a>
+      </div>
+    </main>
+  </body>
+</html>
